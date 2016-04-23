@@ -1,0 +1,29 @@
+{
+  "name": "web-womb",
+  "version": "1.0.0",
+  "description": "Web frontend to %womb ship management daemon",
+  "main": "index.js",
+  "browserify": {
+    "transform": [
+      "coffeeify"
+    ]
+  },
+  "scripts": {
+    "watch": "OUT=desk/web/womb; mkdir -p $OUT; watchify -v -o $OUT/main.js js/main.coffee",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/urbit/womb.git"
+  },
+  "author": "Anton Dyudin ~fyr",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/urbit/womb/issues"
+  },
+  "homepage": "https://github.com/urbit/womb#readme",
+  "dependencies": {
+    "coffeeify": "^2.0.1",
+    "watchify": "^3.7.0"
+  }
+}
