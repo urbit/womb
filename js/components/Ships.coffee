@@ -6,21 +6,27 @@ recl = React.createClass
 rele = React.createElement
 name = (displayName,component)-> _.extend component, {displayName}
 
-{p,ul,li,div,pre,code} = React.DOM
+{p,ul,li,span,div,pre,code} = React.DOM
 
+labels = 
+  free: "Unallocated"
+  owned: "Issued"
+  split: "Distributing"
+  
+Label = (s)-> span {className:"label label-default"}, s
 Stat = name "Stat", (stats)-> 
     ul {},
       for ship, stat of stats
         {free, owned, split} = stat # one of
         className = clas stat
         li {className,key:ship},
-          "~#{ship}: ",
+          span {className:"mono"}, "~#{ship}: "
           switch
-            when free?  then "Unallocated"
-            when owned? then "Granted to "+owned
+            when free?  then Label labels.free
+            when owned? then Label labels.owned
             when split?
               if _.isEmpty split
-                "Split"
+                Label labels.split
               else rele Stat, split
             else throw new Error "Bad stat: #{_.keys stat}"
       
