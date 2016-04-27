@@ -49,12 +49,12 @@ module.exports = recl
       pass = "~" + pass
     @setPasscode (
       if (shipShape pass) and pass.length is 57
-        pass
+        pass.slice(1)
     )
     
   render: ->
     div {},
       p {}, "Input a passcode to claim ships: "
-      input {@onChange,defaultValue:""}
+      input {@onChange,defaultValue:@state.passcode}
       if @state.passcode
-        rele Balance, {pass:@state.passcode,spur: "/"+@state.passcode}
+        rele Balance, {pass:@state.passcode,spur: "/~"+@state.passcode}

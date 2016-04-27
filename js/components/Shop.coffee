@@ -11,7 +11,7 @@ ShopShips = Scry "/shop", ({data,claimShip})->
   ul {className:"shop"},
     for who in data
       li {className:"option", key:who},
-        span {className:"mono"}, who, " "
+        span {className:"mono"}, "~", who, " "
         button {onClick: -> (claimShip who)}, "Claim"
 
 Shop = (type)-> recl

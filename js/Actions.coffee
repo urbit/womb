@@ -3,11 +3,13 @@ Persistence   = require './Persistence.coffee'
 
 module.exports =
   claimShip: ({code,ship})->
-    Persistence.put "womb-claim", {code,ship}, (err,{data})->
-      gotClaim = {ship,own:yes}
-      if err?
-        gotClaim.own = no   # XX other errors
-      Dispatcher.dispatch {gotClaim}
+    Persistence.put "womb-claim",
+      {aut:code,her:ship},
+      (err,{data})->
+        gotClaim = {ship,own:yes}
+        if err?
+          gotClaim.own = no   # XX other errors
+        Dispatcher.dispatch {gotClaim}
       
   getData: (path)->
     Persistence.get path, (err,{data})->

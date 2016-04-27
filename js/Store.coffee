@@ -9,6 +9,7 @@ _data = {}
 WombStore = _.extend (new EventEmitter),{
   emitChange: -> @emit 'change'
   addChangeListener: (cb) -> @on 'change', cb
+  removeChangeListener: (cb) -> @removeListener "change", cb
   
   retrieve: (path)->
     _data[path]
