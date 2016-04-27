@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/urbit/womb#readme",
   "dependencies": {
+    "classnames": "^2.2.4",
     "coffeeify": "^2.0.1",
     "watchify": "^3.7.0"
   }

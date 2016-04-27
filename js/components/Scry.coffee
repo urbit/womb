@@ -7,7 +7,7 @@ rele = React.createElement
 {div,i} = React.DOM
 
 module.exports = (path,Child)-> recl
-  displayName: "Async"
+  displayName: "Scry"+path.split('/').join('-')
   getInitialState: -> @retrieveData()
   retrieveData: -> data: Store.retrieve path
   
