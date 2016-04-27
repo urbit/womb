@@ -13,14 +13,15 @@ labels =
   free: "Unallocated"
   owned: "Issued"
   split: "Distributing"
-  
+    
 Stat = name "Stat", (stats)-> 
     ul {},
-      for ship, stat of stats
-        {free, owned, split} = stat # one of
-        className = clas stat
+      for ship, {live,dist} of stats
+        {free, owned, split} = dist # one of
+        className = clas dist
         li {className,key:ship},
-          span {className:"mono"}, "~#{ship}: "
+          span {className:"mono"}, "~#{ship}"
+          " (", live, "): "  # XX also a label?
           switch
             when free?  then Label labels.free
             when owned? then Label labels.owned
@@ -28,6 +29,6 @@ Stat = name "Stat", (stats)->
               if _.isEmpty split
                 Label labels.split
               else rele Stat, split
-            else throw new Error "Bad stat: #{_.keys stat}"
+            else throw new Error "Bad stat: #{_.keys dist}"
       
 module.exports = Scry "/stats", ({data}) -> rele Stat, data
