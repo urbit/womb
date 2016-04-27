@@ -11,7 +11,7 @@ module.exports = (path,Child)-> recl
   getInitialState: -> @retrieveData()
   retrieveData: -> data: Store.retrieve @getPath()
   
-  getPath: -> path + (@props.subPath ? "")
+  getPath: -> path + (@props.spur ? "")
 
   checkState: ->
     if !@state.data?
