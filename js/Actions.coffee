@@ -2,17 +2,19 @@ Dispatcher    = require './Dispatcher.coffee'
 Persistence   = require './Persistence.coffee'
 
 module.exports =
-  claimShip: ({code,ship})->
+  claimShip: (pass,ship)->
     Persistence.put "womb-claim",
-      {aut:code,her:ship},
-      (err,{data})->
-        gotClaim = {ship,own:yes}
-        if err?
+      {aut:pass,her:ship},
+      (err,{data,status})->
+        gotClaim = {pass,ship,own:yes}
+        if status isnt 200
           gotClaim.own = no   # XX other errors
         Dispatcher.dispatch {gotClaim}
       
   getData: (path)->
-    Persistence.get path, (err,{data})->
+    Persistence.get path, (err,{status,data})->
       if err?
+        throw new Error "Client error"
+      if status isnt 200
         throw new Error "Server error"
       Dispatcher.dispatch gotData: {path,data}

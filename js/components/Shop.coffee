@@ -12,7 +12,7 @@ ShopShips = Scry "/shop", ({data,claimShip})->
     for who in data
       li {className:"option", key:who},
         span {className:"mono"}, "~", who, " "
-        button {onClick: -> (claimShip who)}, "Claim"
+        button {onClick:claimShip(who)}, "Claim"
 
 Shop = (type)-> recl
   displayName: "Shop-#{type}"
@@ -20,7 +20,8 @@ Shop = (type)-> recl
   reroll: -> @setState @roll()
   getInitialState: -> @roll()
 
-  claimShip: (ship)-> Actions.claimShip {ship,code:@props.pass}
+  claimShip: (ship)->
+    (=> Actions.claimShip @props.pass, ship)
   
   render: ->
     spur = "/#{type}/#{@state.shipSelector}"
