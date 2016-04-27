@@ -37,14 +37,20 @@ Balance = Scry "/balance", ({pass,data:{planets,stars,owner,history}})->
 
 module.exports = recl
   displayName: "Claim"
-  getInitialState: -> passcode: no
+  getInitialState: -> passcode: (localStorage.womb_claim ? "")
+      
+  setPasscode: (passcode)->
+    localStorage.womb_claim = passcode ? ""
+    @setState {passcode}
+  
   onChange: ({target})->
     pass = target.value.trim()
     if pass[0] isnt '~'
       pass = "~" + pass
-    @setState passcode:
+    @setPasscode (
       if (shipShape pass) and pass.length is 57
         pass
+    )
     
   render: ->
     div {},
