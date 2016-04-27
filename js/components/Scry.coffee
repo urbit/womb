@@ -9,16 +9,26 @@ rele = React.createElement
 module.exports = (path,Child)-> recl
   displayName: "Scry"+path.split('/').join('-')
   getInitialState: -> @retrieveData()
-  retrieveData: -> data: Store.retrieve path
+  retrieveData: -> data: Store.retrieve @getPath()
   
+  getPath: -> path + (@props.subPath ? "")
+
+  checkState: ->
+    if !@state.data?
+      Actions.getData @getPath()
+
   componentDidMount: ->
     Store.addChangeListener @changeListener
-    if !@state.data?
-      Actions.getData path
+    @checkState()
   
   componentWillUnmount: ->
     Store.removeChangeListener @changeListener
   
+  componentDidUpdate: (_props,_state) ->
+    if _props isnt @props
+      @setState @retrieveData()
+    @checkState()
+
   changeListener: -> if @isMounted() then @setState @retrieveData()
 
   render: -> div {},

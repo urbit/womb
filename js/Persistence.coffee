@@ -1,3 +1,6 @@
+dup = {}
 module.exports =
   get: (path,cb)->
-    urb.bind "/scry/x/womb"+path, {appl:"hood"}, cb
+    unless dup[path]
+      dup[path] = yes
+      urb.bind "/scry/x/womb"+path, {appl:"hood"}, cb
