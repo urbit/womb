@@ -3,6 +3,7 @@ Persistence   = require './Persistence.coffee'
 
 module.exports =
   claimShip: (pass,ship)->
+    Dispatcher.dispatch putClaim: {pass, ship}
     Persistence.put "womb-claim",
       {aut:pass,her:ship},
       (err,{data,status})->

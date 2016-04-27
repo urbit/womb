@@ -49,7 +49,7 @@ module.exports = recl
       pass = "~" + pass
     @setPasscode (
       if (shipShape pass) and pass.length is 57
-        pass.slice(1)
+        pass[1..]
     )
     
   render: ->

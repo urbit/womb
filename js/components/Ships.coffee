@@ -1,6 +1,7 @@
 clas = require 'classnames'
 
 Scry = require './Scry.coffee'
+Label = require './Label.coffee'
 
 recl = React.createClass
 rele = React.createElement
@@ -13,7 +14,6 @@ labels =
   owned: "Issued"
   split: "Distributing"
   
-Label = (s)-> span {className:"label label-default"}, s
 Stat = name "Stat", (stats)-> 
     ul {},
       for ship, stat of stats

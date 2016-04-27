@@ -31,7 +31,7 @@ module.exports = (path,Child)-> recl
 
   changeListener: -> if @isMounted() then @setState @retrieveData()
 
-  render: -> div {},
+  render: -> div {style:display:"inline"}, # XX CSS
     if !@state.data?
       i {key:"load"}, "Fetching data..."
     else

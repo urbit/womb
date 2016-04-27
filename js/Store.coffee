@@ -5,6 +5,8 @@ WombDispatcher = require './Dispatcher.coffee'
 
 
 _data = {}
+_local = {claim:{}}
+_localDefault = claim: "none"
 
 WombStore = _.extend (new EventEmitter),{
   emitChange: -> @emit 'change'
@@ -12,9 +14,15 @@ WombStore = _.extend (new EventEmitter),{
   removeChangeListener: (cb) -> @removeListener "change", cb
   
   retrieve: (path)->
-    _data[path]
+    if path[0] isnt "_"
+      return _data[path]
+    [key,path...] = path[1..].split("/")
+    _local[key]?[path.join("/")] ? _localDefault[key]
+    
   gotData: ({path,data})-> _data[path] = data
-  gotClaim: (x)-> console.log "got claim", x
+  putClaim: ({ship})-> _local.claim[ship] = "wait"
+  gotClaim: ({ship,own})->
+    _local.claim[ship] = (if own then "own" else "xeno")
 }
 
 WombStore.dispatchToken = WombDispatcher.register (action) ->
