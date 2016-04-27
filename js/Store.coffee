@@ -10,8 +10,10 @@ WombStore = _.extend (new EventEmitter),{
   emitChange: -> @emit 'change'
   addChangeListener: (cb) -> @on 'change', cb
   
-  retrieve: (path)-> _data[path]
+  retrieve: (path)->
+    _data[path]
   gotData: ({path,data})-> _data[path] = data
+  gotClaim: (x)-> console.log "got claim", x
 }
 
 WombStore.dispatchToken = WombDispatcher.register (action) ->
