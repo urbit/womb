@@ -1,13 +1,13 @@
 clas = require 'classnames'
-{shipShape} = require '../util.coffee'
 
 Scry = require './Scry.coffee'
 Shop = require './Shop.coffee'
+ShipInput = require './ShipInput.coffee'
 
 recl = React.createClass
 rele = React.createElement
 
-{div,b,h6,input,p,span,code} = React.DOM
+{div,b,h6,p,span,code} = React.DOM
 
 Mail = (email)-> code {className:"email"}, email
 History = (history)->
@@ -19,8 +19,8 @@ History = (history)->
          span {key}, (Mail who)
       "and Tlon Inc. "
 
-Stars   = Shop "stars"
-Planets = Shop "planets"
+Stars   = Shop "stars", 7
+Planets = Shop "planets", 14
   
 Balance = Scry "/balance", ({pass,data:{planets,stars,owner,history}})->
     div {},
@@ -42,19 +42,10 @@ module.exports = recl
   setPasscode: (passcode)->
     localStorage.womb_claim = passcode ? ""
     @setState {passcode}
-  
-  onChange: ({target})->
-    pass = target.value.trim()
-    if pass[0] isnt '~'
-      pass = "~" + pass
-    @setPasscode (
-      if (shipShape pass) and pass.length is 57
-        pass[1..]
-    )
     
   render: ->
     div {},
       p {}, "Input a passcode to claim ships: "
-      input {@onChange,defaultValue:@state.passcode}
+      ShipInput {onInputShip:@setPasscode,length:57,defaultValue:@state.passcode}
       if @state.passcode
         rele Balance, {pass:@state.passcode,spur: "/~"+@state.passcode}
