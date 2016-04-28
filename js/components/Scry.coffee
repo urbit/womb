@@ -16,7 +16,7 @@ FromStore = (path,Child)-> recl
   # matches both "local" claim/... and leading-/ scry paths
   getKey: -> path.match(/[a-z0-9-]+/)[0] 
       
-  getPath: -> path + (@props.spur ? "")
+  getPath: -> path.replace /:([a-z0-9_.~-]+)/g, (m,key)=> @props[key]
 
   componentDidMount: -> Store.addChangeListener @changeListener
   componentWillUnmount: -> Store.removeChangeListener @changeListener

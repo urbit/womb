@@ -12,9 +12,9 @@ rele = React.createElement
 ClaimButton = FromStore "pass", ({pass,who})-> 
   if not who
     return button {disabled:yes}, "Claim (invalid)" # XX CSS
-  rele _ClaimButton, {pass,who,spur:"/#{who}"}
+  rele _ClaimButton, {pass,who}
   
-_ClaimButton = FromStore "claim", ({pass,claim,who})->
+_ClaimButton = FromStore "claim/:who", ({pass,claim,who})->
  switch claim
     when "own" then Label "Claimed!", "success"
     when "wait" then Label "Claiming..."
@@ -22,8 +22,9 @@ _ClaimButton = FromStore "claim", ({pass,claim,who})->
     when "none"
       onClick = -> Actions.claimShip pass,who
       button {onClick}, "Claim"
+    else throw new Error "Bad claim type: #{claim}"
 
-ShopShips = Scry "/shop", ({shop})->
+ShopShips = Scry "/shop/:type/:nth", ({shop})->
   ul {className:"shop"},
     for who in shop
       li {className:"option", key:who},
@@ -39,12 +40,11 @@ Shop = (type,length)-> recl
   onInputShip: (customShip)-> @setState {customShip}
   
   render: ->
-    spur = "/#{type}/#{@state.shipSelector}"
     div {},
       h6 {},
         "Avaliable #{type} (random). ",
         button {onClick:@reroll}, "Reroll"
-      rele ShopShips, _.extend {}, @props, {spur}
+      rele ShopShips, _.extend {}, @props, {type,nth:@state.shipSelector}
       h6 {}, "Custom"
       div {}, "Specific #{type}: ", 
         rele ShipInput, {length,@onInputShip}

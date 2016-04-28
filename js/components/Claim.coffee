@@ -25,7 +25,7 @@ History = (history)->
 Stars   = Shop "stars", 7
 Planets = Shop "planets", 14
   
-Balance = Scry "/balance", ({balance:{planets,stars,owner,history}})->
+Balance = Scry "/balance/~:pass", ({balance:{planets,stars,owner,history}})->
     div {},
       h6 {}, "Balance"
       p {}, "Hello ", (Mail owner)
@@ -42,5 +42,4 @@ module.exports = name "Claim", FromStore "pass", ({pass})->
   div {},
       p {}, "Input a passcode to claim ships: "
       ShipInput {length:57,defaultValue:pass,onInputShip:Actions.setPasscode}
-      if pass
-        rele Balance, {spur:"/~#{pass}"}
+      if pass then rele Balance, {pass}
