@@ -9,7 +9,8 @@ ShipInput = require './ShipInput.coffee'
 recl = React.createClass
 rele = React.createElement
 
-ClaimButton = ({who,pass})-> 
+ClaimButton = Scry "_pass", ({who,data})-> 
+  pass = data
   if not who
     return button {disabled:yes}, "Claim (invalid)" # XX CSS
   rele _ClaimButton,
@@ -28,7 +29,7 @@ ShopShips = Scry "/shop", ({pass,data})->
     for who in data
       li {className:"option", key:who},
         span {className:"mono"}, "~", who, " "
-        rele ClaimButton, {pass,who}
+        rele ClaimButton, {who}
 
 Shop = (type,length)-> recl
   displayName: "Shop-#{type}"
@@ -40,15 +41,14 @@ Shop = (type,length)-> recl
   
   render: ->
     spur = "/#{type}/#{@state.shipSelector}"
-    {pass} = @props
     div {},
       h6 {},
         "Avaliable #{type} (random). ",
         button {onClick:@reroll}, "Reroll"
-      rele ShopShips, _.extend {}, @props, {spur, pass}
+      rele ShopShips, _.extend {}, @props, {spur}
       h6 {}, "Custom"
       div {}, "Specific #{type}: ", 
         rele ShipInput, {length,@onInputShip}
-        ClaimButton {pass,who:@state.customShip ? ""}
+        rele ClaimButton, {who: (@state.customShip ? "")}
 
 module.exports = Shop

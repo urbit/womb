@@ -1,11 +1,14 @@
 clas = require 'classnames'
 
+Actions = require '../Actions.coffee'
+
 Scry = require './Scry.coffee'
 Shop = require './Shop.coffee'
 ShipInput = require './ShipInput.coffee'
 
 recl = React.createClass
 rele = React.createElement
+name = (displayName,component)-> _.extend component, {displayName}
 
 {div,b,h6,p,span,code} = React.DOM
 
@@ -22,7 +25,7 @@ History = (history)->
 Stars   = Shop "stars", 7
 Planets = Shop "planets", 14
   
-Balance = Scry "/balance", ({pass,data:{planets,stars,owner,history}})->
+Balance = Scry "/balance", ({data:{planets,stars,owner,history}})->
     div {},
       h6 {}, "Balance"
       p {}, "Hello ", (Mail owner)
@@ -32,20 +35,13 @@ Balance = Scry "/balance", ({pass,data:{planets,stars,owner,history}})->
         "It contains "
         (b {}, planets or "no"), " Planets "
         "and ", (b {}, stars or "no"), " Stars."
-      if stars then rele Stars, {pass}
-      if planets then rele Planets, {pass}
+      if stars then rele Stars
+      if planets then rele Planets
 
-module.exports = recl
-  displayName: "Claim"
-  getInitialState: -> passcode: (localStorage.womb_claim ? "")
-      
-  setPasscode: (passcode)->
-    localStorage.womb_claim = passcode ? ""
-    @setState {passcode}
-    
-  render: ->
-    div {},
+module.exports = name "Claim", Scry "_pass", (props)->
+  pass = props.data
+  div {},
       p {}, "Input a passcode to claim ships: "
-      ShipInput {onInputShip:@setPasscode,length:57,defaultValue:@state.passcode}
-      if @state.passcode
-        rele Balance, {pass:@state.passcode,spur: "/~"+@state.passcode}
+      ShipInput {length:57,defaultValue:pass,onInputShip:Actions.setPasscode}
+      if pass
+        rele Balance, {spur:"/~#{pass}"}

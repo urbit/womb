@@ -2,6 +2,7 @@ Dispatcher    = require './Dispatcher.coffee'
 Persistence   = require './Persistence.coffee'
 
 module.exports =
+  setPasscode: (pass)-> Dispatcher.dispatch setPasscode: pass
   claimShip: (pass,ship)->
     Dispatcher.dispatch putClaim: {pass, ship}
     Persistence.put "womb-claim",
