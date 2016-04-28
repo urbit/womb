@@ -1,6 +1,6 @@
 Actions = require '../Actions.coffee'
 
-Scry = require './Scry.coffee'
+{FromStore} = Scry = require './Scry.coffee'
 Label = require './Label.coffee'
 ShipInput = require './ShipInput.coffee'
 
@@ -9,24 +9,23 @@ ShipInput = require './ShipInput.coffee'
 recl = React.createClass
 rele = React.createElement
 
-ClaimButton = Scry "_pass", ({who,data})-> 
-  pass = data
+ClaimButton = FromStore "pass", ({pass,who})-> 
   if not who
     return button {disabled:yes}, "Claim (invalid)" # XX CSS
-  rele _ClaimButton,
-    {spur:"/#{who}", onClick: -> Actions.claimShip pass,who}
+  rele _ClaimButton, {pass,who,spur:"/#{who}"}
   
-_ClaimButton = Scry "_claim", ({data,onClick})->
-  switch data
+_ClaimButton = FromStore "claim", ({pass,claim,who})->
+ switch claim
     when "own" then Label "Claimed!", "success"
     when "wait" then Label "Claiming..."
     when "xeno" then Label "Taken", "warning"
     when "none"
+      onClick = -> Actions.claimShip pass,who
       button {onClick}, "Claim"
 
-ShopShips = Scry "/shop", ({pass,data})->
+ShopShips = Scry "/shop", ({shop})->
   ul {className:"shop"},
-    for who in data
+    for who in shop
       li {className:"option", key:who},
         span {className:"mono"}, "~", who, " "
         rele ClaimButton, {who}

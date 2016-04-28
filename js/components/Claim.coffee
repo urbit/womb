@@ -2,7 +2,7 @@ clas = require 'classnames'
 
 Actions = require '../Actions.coffee'
 
-Scry = require './Scry.coffee'
+{FromStore} = Scry = require './Scry.coffee'
 Shop = require './Shop.coffee'
 ShipInput = require './ShipInput.coffee'
 
@@ -25,7 +25,7 @@ History = (history)->
 Stars   = Shop "stars", 7
 Planets = Shop "planets", 14
   
-Balance = Scry "/balance", ({data:{planets,stars,owner,history}})->
+Balance = Scry "/balance", ({balance:{planets,stars,owner,history}})->
     div {},
       h6 {}, "Balance"
       p {}, "Hello ", (Mail owner)
@@ -38,8 +38,7 @@ Balance = Scry "/balance", ({data:{planets,stars,owner,history}})->
       if stars then rele Stars
       if planets then rele Planets
 
-module.exports = name "Claim", Scry "_pass", (props)->
-  pass = props.data
+module.exports = name "Claim", FromStore "pass", ({pass})->
   div {},
       p {}, "Input a passcode to claim ships: "
       ShipInput {length:57,defaultValue:pass,onInputShip:Actions.setPasscode}

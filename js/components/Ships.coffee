@@ -14,7 +14,7 @@ labels =
   owned: "Issued"
   split: "Distributing"
     
-Stat = name "Stat", (stats)-> 
+Stat = name "Stat", ({stats})-> 
     ul {},
       for ship, {live,dist} of stats
         {free, owned, split} = dist # one of
@@ -28,7 +28,7 @@ Stat = name "Stat", (stats)->
             when split?
               if _.isEmpty split
                 Label labels.split
-              else rele Stat, split
+              else rele Stat, stats:split
             else throw new Error "Bad stat: #{_.keys dist}"
       
-module.exports = Scry "/stats", ({data}) -> rele Stat, data
+module.exports = Scry "/stats", Stat

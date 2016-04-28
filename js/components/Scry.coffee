@@ -6,35 +6,46 @@ rele = React.createElement
 
 {div,i} = React.DOM
 
-module.exports = (path,Child)-> recl
-  displayName: "Scry"+path.split('/').join('-')
+FromStore = (path,Child)-> recl
+  displayName: "FromStore."+path.split('/').join('-')
   getInitialState: -> @retrieveData()
-  retrieveData: -> data: Store.retrieve @getPath()
-  
+  retrieveData: ->
+    data = Store.retrieve @getPath()
+    {loaded:data?, "#{@getKey()}": data}
+
+  # matches both "local" claim/... and leading-/ scry paths
+  getKey: -> path.match(/[a-z0-9-]+/)[0] 
+      
   getPath: -> path + (@props.spur ? "")
 
-  checkState: ->
-    if !@state.data?
-      Actions.getData @getPath()
-
-  componentDidMount: ->
-    Store.addChangeListener @changeListener
-    @checkState()
-  
-  componentWillUnmount: ->
-    Store.removeChangeListener @changeListener
+  componentDidMount: -> Store.addChangeListener @changeListener
+  componentWillUnmount: -> Store.removeChangeListener @changeListener
   
   componentDidUpdate: (_props,_state) ->
     if _props isnt @props
       @setState @retrieveData()
-    @checkState()
 
   changeListener: -> if @isMounted() then @setState @retrieveData()
+  render: -> 
+      rele Child, (_.extend {}, @props, @state, {path:@getPath()})
 
-  render: -> div {style:display:"inline"}, # XX CSS
-    if !@state.data?
-      i {key:"load"}, "Fetching data..."
-    else
-      rele Child,
-        (_.extend {}, @props, {key:"got", data: @state.data}),
-        @props.children
+Scry = (path,Child)-> FromStore path, recl
+  displayName: "Scry"
+  checkProps: ->
+    if !@props.loaded
+      Actions.getData @props.path
+
+  componentDidMount: -> @checkProps()  
+  componentDidUpdate: (_props,_state) -> @checkProps()
+
+  render: ->
+    div {style:display:"inline"}, # XX CSS
+      if !@props.loaded
+        i {key:"load"}, "Fetching data..."
+      else
+        rele Child,
+          (_.extend {}, @props, {key:"got"}),
+          @props.children
+
+module.exports = Scry
+module.exports.FromStore = FromStore
