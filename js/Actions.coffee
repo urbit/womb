@@ -19,6 +19,6 @@ module.exports =
     Persistence.get {path,fresh}, (err,{status,data})->
       if err?
         throw new Error "Client error"
-      if status isnt 200
-        throw new Error "Server error"
-      Dispatcher.dispatch gotData: {path,data}
+      # if status isnt 200
+      #   Dispatcher.dispatch gotError: {path,status,data}
+      else Dispatcher.dispatch gotData: {path,data}

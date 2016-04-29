@@ -1,5 +1,4 @@
 Scry = require './Scry.coffee'
-Label = require './Label.coffee'
 ShipInput = require './ShipInput.coffee'
 ClaimButton = require './ClaimButton.coffee'
 

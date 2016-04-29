@@ -4,6 +4,7 @@ Actions = require '../Actions.coffee'
 
 {FromStore} = Scry = require './Scry.coffee'
 Shop = require './Shop.coffee'
+Label = require './Label.coffee'
 ShipInput = require './ShipInput.coffee'
 
 recl = React.createClass
@@ -25,7 +26,10 @@ History = (history)->
 Stars   = Shop "stars", 7
 Planets = Shop "planets", 14
   
-Balance = Scry "/balance/~:pass", ({balance:{planets,stars,owner,history}})->
+Balance = Scry "/balance/~:pass", ({balance})->
+    if balance.fail
+      return div {}, Label "Invalid passcode", "warning"
+    {planets,stars,owner,history} = balance
     div {},
       h6 {}, "Balance"
       p {}, "Hello ", (Mail owner)
