@@ -45,5 +45,5 @@ Balance = Scry "/balance/~:pass", ({balance})->
 module.exports = name "Claim", FromStore "pass", ({pass})->
   div {},
       p {}, "Input a passcode to claim ships: "
-      ShipInput {length:57,defaultValue:pass,onInputShip:Actions.setPasscode}
+      ShipInput {length:28,defaultValue:pass,onInputShip:Actions.setPasscode}
       if pass then rele Balance, {pass}
