@@ -20,7 +20,7 @@ RecycleButton = name "RecycleButton", ({disabled,onClick})->
 RecycleTicket = name "RecycleTicket",
   Scry "/ticket/~:ship/~:tick", ({ship,tick,mail,ticket:{passcode,status}})->
     doRecycle = -> Actions.recycleTicket {ship,tick,mail}, passcode
-    switch status
+    switch status ? "fail"
       when "fail" then Label "Bad ticket", "warning"
       when "good" then rele RecycleButton, {disabled:!mail,onClick:doRecycle}
       when "used" 
