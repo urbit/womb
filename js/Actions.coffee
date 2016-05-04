@@ -3,6 +3,16 @@ Persistence   = require './Persistence.coffee'
 
 module.exports =
   setPasscode: (pass)-> Dispatcher.dispatch setPasscode: pass
+
+  recycleTicket: ({ship,tick,mail},pass)->
+    Persistence.put "womb-recycle",
+      {who:mail,him:"~"+ship,tik:"~"+tick},
+      (err,{status})=>
+        if status isnt 200
+          throw new Error "Server error: #{JSON.stringify data}" # XX handle
+        @getData "/ticket/~#{ship}/~#{tick}", true
+        @setPasscode pass
+      
   claimShip: (pass,ship)->
     Dispatcher.dispatch putClaim: {pass, ship}
     Persistence.put "womb-claim",

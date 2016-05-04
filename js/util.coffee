@@ -52,3 +52,11 @@ module.exports =
   shipShape: (a)->
     (SHIPSHAPE.test a) and 
       _.all (a.match /[a-z]{3}/g), (b)-> -1 isnt PO.indexOf(b)
+
+  mailShape: (a)->
+    valid = (a.indexOf('@') != -1 &&
+      a.indexOf('.') != -1 &&
+      a.length > 7 &&
+      a.split(".")[1].length > 1 &&
+      a.split("@")[0].length > 0 &&
+      a.split("@")[1].length > 4)
