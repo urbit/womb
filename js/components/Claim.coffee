@@ -15,6 +15,12 @@ name = (displayName,component)-> _.extend component, {displayName}
 
 {div,b,h6,p,span,code} = React.DOM
 
+SHOP = false # enable ship shop
+
+unless SHOP
+  Shop = (type,length)-> 
+    ({})-> h6 {}, "Distribution of ",type," not yet live."
+
 Mail = (email)-> code {className:"email"}, email
 History = (history)->
   if !history.length
