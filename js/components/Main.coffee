@@ -3,11 +3,15 @@ Ships  = require './Ships.coffee'
 
 rele = React.createElement
 
+NET = false
+
 {div, h4} = React.DOM
 
 module.exports = ->
   div {},
     h4 {}, "Claims"
     rele Claim, {}
-    h4 {}, "Network"
-    rele Ships, {}
+    if NET
+      div {},
+        h4 {}, "Network"
+        rele Ships, {}
