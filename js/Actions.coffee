@@ -23,7 +23,7 @@ module.exports =
           gotClaim.own = no   # XX other errors
         Dispatcher.dispatch {gotClaim}
         @getData "/stats", true
-        @getData "/balance/~#{pass}", true
+        @getData "/balance/#{pass}", true
       
   getData: (path,fresh=no)->
     Persistence.get {path,fresh}, (err,{status,data})->

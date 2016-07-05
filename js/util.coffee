@@ -49,7 +49,7 @@ module.exports =
       throw new Error "Improper frond: #{[key,alts...].join ','}"
     [key, a[key]]
     
-  uvShape: (a)-> (a[...2] is "0v") and /^[0-9a-v]{1,5}(.[0-9a-v]{5})*$/.test a[2...]
+  uvShape: (a)-> (a[...2] is "0v") and /^[0-9a-v]{1,5}(\.[0-9a-v]{5})*$/.test a[2...]
 
   shipShape: (a)-> 
     (SHIPSHAPE.test a) and 

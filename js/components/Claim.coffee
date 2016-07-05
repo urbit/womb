@@ -7,7 +7,7 @@ Actions = require '../Actions.coffee'
 Label = require './Label.coffee'
 
 Shop = require './Shop.coffee'
-ShipInput = require './ShipInput.coffee'
+PassInput = require './PassInput.coffee'
 
 recl = React.createClass
 rele = React.createElement
@@ -34,7 +34,7 @@ History = (history)->
 Stars   = Shop "stars", 7
 Planets = Shop "planets", 14
   
-Balance = Scry "/balance/~:pass", ({balance})->
+Balance = Scry "/balance/:pass", ({balance})->
     if balance.fail
       return div {}, Label "Invalid passcode", "warning"
     {planets,stars,owner,history} = balance
@@ -53,5 +53,5 @@ Balance = Scry "/balance/~:pass", ({balance})->
 module.exports = name "Claim", FromStore "pass", ({pass})->
   div {},
       p {}, "Input a passcode to view ship allocation: "
-      ShipInput {length:28,defaultValue:pass,onInputShip:Actions.setPasscode}
+      PassInput {minLength:12,defaultValue:pass,onInputPass:Actions.setPasscode}
       if pass then rele Balance, {pass}
