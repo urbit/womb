@@ -53,5 +53,5 @@ Balance = Scry "/balance/:pass", ({balance})->
 module.exports = name "Claim", FromStore "pass", ({pass})->
   div {},
       p {}, "Input a passcode to view ship allocation: "
-      PassInput {minLength:12,defaultValue:pass,onInputPass:Actions.setPasscode}
+      PassInput {minLength:32,defaultValue:pass,onInputPass:Actions.setPasscode}
       if pass then rele Balance, {pass}
