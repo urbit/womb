@@ -1,0 +1,18 @@
+{uvShape} = require '../util.coffee'
+
+{input} = React.DOM
+
+recl = React.createClass
+name = (displayName,component)-> _.extend component, {displayName}
+
+module.exports = name "PassInput", ({onInputPass,minLength,defaultValue})->
+  input {
+    defaultValue,
+    placeholder: "0v0"
+    onChange: ({target})->
+      pass = target.value.trim()
+      onInputPass (
+        if (uvShape pass) and pass.length >= minLength
+          pass
+      )
+  }

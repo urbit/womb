@@ -49,7 +49,9 @@ module.exports =
       throw new Error "Improper frond: #{[key,alts...].join ','}"
     [key, a[key]]
     
-  shipShape: (a)->
+  uvShape: (a)-> (a[...2] is "0v") and /^[0-9a-v]{1,5}(.[0-9a-v]{5})*$/.test a[2...]
+
+  shipShape: (a)-> 
     (SHIPSHAPE.test a) and 
       _.all (a.match /[a-z]{3}/g), (b)-> -1 isnt PO.indexOf(b)
 
