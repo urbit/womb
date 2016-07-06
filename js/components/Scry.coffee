@@ -14,19 +14,19 @@ FromStore = (path,Child)-> recl
     {loaded:data?, "#{@getKey()}": data}
 
   # matches both "local" claim/... and leading-/ scry paths
-  getKey: -> path.match(/[a-z0-9-]+/)[0] 
-      
+  getKey: -> path.match(/[a-z0-9-]+/)[0]
+
   getPath: -> path.replace /:([a-z0-9_.~-]+)/g, (m,key)=> @props[key]
 
   componentDidMount: -> Store.addChangeListener @changeListener
   componentWillUnmount: -> Store.removeChangeListener @changeListener
-  
+
   componentDidUpdate: (_props,_state) ->
     if _props isnt @props
       @setState @retrieveData()
 
   changeListener: -> if @isMounted() then @setState @retrieveData()
-  render: -> 
+  render: ->
       rele Child, (_.extend {}, @props, @state, {path:@getPath()})
 
 Scry = (path,Child)-> FromStore path, recl
@@ -35,13 +35,13 @@ Scry = (path,Child)-> FromStore path, recl
     if !@props.loaded
       Actions.getData @props.path
 
-  componentDidMount: -> @checkProps()  
+  componentDidMount: -> @checkProps()
   componentDidUpdate: (_props,_state) -> @checkProps()
 
   render: ->
     div {style:display:"inline"}, # XX CSS
       if !@props.loaded
-        i {key:"load"}, "Fetching data..."
+        i {key:"load",style:{marginTop:'1rem',display:'block'}}, "Loading..."
       else
         rele Child,
           (_.extend {}, @props, {key:"got"}),

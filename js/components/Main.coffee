@@ -5,11 +5,11 @@ rele = React.createElement
 
 NET = false
 
-{div, h4} = React.DOM
+{div, h3} = React.DOM
 
 module.exports = ->
   div {},
-    h4 {}, "Claims"
+    h3 {className:'first',style:{lineHeight:'1.5rem'}}, "Check your balance"
     rele Claim, {}
     if NET
       div {},

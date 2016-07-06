@@ -13,12 +13,12 @@ recl = React.createClass
 rele = React.createElement
 name = (displayName,component)-> _.extend component, {displayName}
 
-{div,b,h6,p,span,code} = React.DOM
+{div,b,h3,h6,p,span,code} = React.DOM
 
 SHOP = false # enable ship shop
 
 unless SHOP
-  Shop = (type,length)-> 
+  Shop = (type,length)->
     ({})-> h6 {}, "Distribution of ",type," not yet live."
 
 Mail = (email)-> code {className:"email"}, email
@@ -33,18 +33,19 @@ History = (history)->
 
 Stars   = Shop "stars", 7
 Planets = Shop "planets", 14
-  
+
 Balance = Scry "/balance/:pass", ({balance})->
     if balance.fail
-      return div {}, Label "Invalid passcode", "warning"
+      return div {style:{marginTop:'1rem'}}, Label "Invalid passcode", "warning"
     {planets,stars,owner,history} = balance
     div {},
-      h6 {}, "Balance"
-      p {}, "Hello ", (Mail owner)
+      h3 {}, "Balance"
+      p {}, "Hello ", (Mail owner), ", "
       p {},
         "This balance was "
         History history
-        "It contains "
+      p {},
+        "You currently hold "
         (b {}, planets or "no"), " Planets "
         "and ", (b {}, stars or "no"), " Stars."
       if stars then rele Stars
@@ -52,6 +53,6 @@ Balance = Scry "/balance/:pass", ({balance})->
 
 module.exports = name "Claim", FromStore "pass", ({pass})->
   div {},
-      p {}, "Input a passcode to view ship allocation: "
+      p {}, "To view your ships, input your passcode."
       PassInput {minLength:32,defaultValue:pass,onInputPass:Actions.setPasscode}
       if pass then rele Balance, {pass}
