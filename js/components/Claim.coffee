@@ -5,9 +5,11 @@ Actions = require '../Actions.coffee'
 {FromStore} = Scry = require './Scry.coffee'
 
 Label = require './Label.coffee'
+InfoBox = require './InfoBox.coffee'
 
 Shop = require './Shop.coffee'
 PassInput = require './PassInput.coffee'
+Recycling = require './Recycling.coffee'
 
 recl = React.createClass
 rele = React.createElement
@@ -56,3 +58,7 @@ module.exports = name "Claim", FromStore "pass", ({pass})->
       p {}, "To view your ships, input your passcode."
       PassInput {minLength:32,defaultValue:pass,onInputPass:Actions.setPasscode}
       if pass then rele Balance, {pass}
+      else 
+        rele InfoBox, {}, "What if I have an old ticket?",
+          "Old tickets can be converted to a balance:",
+          rele Recycling, {}
