@@ -32,8 +32,8 @@ RecycleTicket = name "RecycleTicket",
 Recycling = recl
   getInitialState: -> {ship:"",tick:"",mail:""}
   render: ->
-    getShip = rele ShipInput, {length:14, old:yes, onInputShip: (ship) => @setState {ship}}
-    getTick = rele ShipInput, {length:28, old:yes, onInputShip: (tick) => @setState {tick}}
+    getShip = rele ShipInput, {length:14, oldFormat:yes, onInputShip: (ship) => @setState {ship}}
+    getTick = rele ShipInput, {length:28, oldFormat:yes, onInputShip: (tick) => @setState {tick}}
     getMail = rele MailInput, {onInputMail: (mail) => @setState {mail}}
     {ship,tick,mail} = @state
     div {},

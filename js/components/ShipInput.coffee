@@ -5,7 +5,7 @@
 recl = React.createClass
 name = (displayName,component)-> _.extend component, {displayName}
 
-module.exports = name "ShipInput", ({onInputShip,length,defaultValue})->
+module.exports = name "ShipInput", ({onInputShip,length,defaultValue,oldFormat})->
   input {
     defaultValue,
     onChange: ({target})->
@@ -13,7 +13,7 @@ module.exports = name "ShipInput", ({onInputShip,length,defaultValue})->
       if ship[0] isnt '~'
         ship = "~" + ship
       onInputShip (
-        if (shipShape ship) and ship.length is length
+        if (shipShape ship, oldFormat) and ship.length is length
           ship[1..]
       )
   }

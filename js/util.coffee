@@ -6,7 +6,7 @@ SHIPSHAPE = ///
    (--[a-z]{6}(-[a-z]{6}){3})+    #
 )$                                #postamble
 ///
-PO = '''
+PO_old = '''
 dozmarbinwansamlitsighidfidlissogdirwacsabwissib
 rigsoldopmodfoglidhopdardorlorhodfolrintogsilmir
 holpaslacrovlivdalsatlibtabhanticpidtorbolfosdot
@@ -41,6 +41,41 @@ nydhusrelrudneshesfetdesretdunlernyrsebhulryllud
 remlysfynwerrycsugnysnyllyndyndemluxfedsedbecmun
 lyrtesmudnytbyrsenwegfyrmurtelreptegpecnelnevfes
 '''
+PO = '''
+dozmarbinwansamlitsighidfidlissogdirwacsabwissib
+rigsoldopmodfoglidhopdardorlorhodfolrintogsilmir
+holpaslacrovlivdalsatlibtabhanticpidtorbolfosdot
+losdilforpilramtirwintadbicdifrocwidbisdasmidlop
+rilnardapmolsanlocnovsitnidtipsicropwitnatpanmin
+ritpodmottamtolsavposnapnopsomfinfonbandorworsip
+ronnorbotwicsocwatdolmagpicdavbidbaltimtasmallig
+sivtagpadsaldivdactansidfabtarmonranniswolmispal
+lasdismaprabtobrollatlonnodnavfignomnibpagsopral
+bilhaddocridmocpacravripfaltodtiltinhapmicfanpat
+taclabmogsimsonpinlomrictapfirhasbosbatpochactid
+havsaplindibhosdabbitbarracparloddosbortochilmac
+tomdigfilfasmithobharmighinradmashalraglagfadtop
+mophabnilnosmilfopfamdatnoldinhatnacrisfotribhoc
+nimlarfitwalrapsarnalmoslandondanladdovrivbacpol
+laptalpitnambonrostonfodponsovnocsorlavmatmipfip
+
+zodnecbudwessevpersutletfulpensytdurwepserwylsun
+rypsyxdyrnuphebpeglupdepdysputlughecryttyvsydnex
+lunmeplutseppesdelsulpedtemledtulmetwenbynhexfeb
+pyldulhetmevruttylwydtepbesdexsefwycburderneppur
+rysrebdennutsubpetrulsynregtydsupsemwynrecmegnet
+secmulnymtevwebsummutnyxrextebfushepbenmuswyxsym
+selrucdecwexsyrwetdylmynmesdetbetbeltuxtugmyrpel
+syptermebsetdutdegtexsurfeltudnuxruxrenwytnubmed
+lytdusnebrumtynseglyxpunresredfunrevrefmectedrus
+bexlebduxrynnumpyxrygryxfeptyrtustyclegnemfermer
+tenlusnussyltecmexpubrymtucfyllepdebbermughuttun
+bylsudpemdevlurdefbusbeprunmelpexdytbyttyplevmyl
+wedducfurfexnulluclennerlexrupnedlecrydlydfenwel
+nydhusrelrudneshesfetdesretdunlernyrsebhulryllud
+remlysfynwerrycsugnysnyllyndyndemluxfedsedbecmun
+lyrtesmudnytbyrsenwegfyrmurtelreptegpecnelnevfes
+'''
 
 module.exports =
   unpackFrond: (a)->
@@ -51,9 +86,10 @@ module.exports =
     
   uvShape: (a)-> (a[...2] is "0v") and /^[0-9a-v]{1,5}(\.[0-9a-v]{5})*$/.test a[2...]
 
-  shipShape: (a)-> 
+  shipShape: (a,old=no)-> 
     (SHIPSHAPE.test a) and 
-      _.all (a.match /[a-z]{3}/g), (b)-> -1 isnt PO.indexOf(b)
+      _.all (a.match /[a-z]{3}/g), (b)->
+        -1 isnt (if old then PO_old else PO).indexOf(b)
 
   mailShape: (a)->
     valid = (a.indexOf('@') != -1 &&
