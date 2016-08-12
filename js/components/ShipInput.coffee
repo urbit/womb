@@ -5,9 +5,11 @@
 recl = React.createClass
 name = (displayName,component)-> _.extend component, {displayName}
 
-module.exports = name "ShipInput", ({onInputShip,length,defaultValue,oldFormat})->
+module.exports = name "ShipInput", ({onInputShip,length,defaultValue,oldFormat,placeholder})->
   input {
     defaultValue,
+    placeholder:placeholder
+    className: 'mono'
     onChange: ({target})->
       ship = target.value.trim()
       if ship[0] isnt '~'

@@ -23,23 +23,24 @@ RecycleTicket = name "RecycleTicket",
     switch status ? "fail"
       when "fail" then Label "Bad ticket", "warning"
       when "good" then rele RecycleButton, {disabled:!mail,onClick:doRecycle}
-      when "used" 
-        span {}, 
+      when "used"
+        span {},
           a {onClick: -> Actions.setPasscode passcode}, passcode
           Label "Ticket exchanged", "info"
       else throw new Error "Bad ticket status: #{status}"
-    
+
 Recycling = recl
   getInitialState: -> {ship:"",tick:"",mail:""}
   render: ->
-    getShip = rele ShipInput, {length:14, oldFormat:yes, onInputShip: (ship) => @setState {ship}}
-    getTick = rele ShipInput, {length:28, oldFormat:yes, onInputShip: (tick) => @setState {tick}}
+    getShip = rele ShipInput, {placeholder:'some-ship', length:14, oldFormat:yes, onInputShip: (ship) => @setState {ship}}
+    getTick = rele ShipInput, {placeholder:'some-sample-ticket-code', length:28, oldFormat:yes, onInputShip: (tick) => @setState {tick}}
     getMail = rele MailInput, {onInputMail: (mail) => @setState {mail}}
     {ship,tick,mail} = @state
-    div {},
-      div {}, "Planet", getShip, (if ship then Label "✓", "success")
-      div {}, "Ticket", getTick, (if tick then Label "✓", "success")
-      div {}, "Email",  getMail, (if mail then Label "✓", "success")
+    div {className:"recycling"},
+      "To convert an old ship and ticket, input your information here."
+      div {}, (div {className:'label'},"Planet"), getShip, (if ship then Label "✓", "success")
+      div {}, (div {className:'label'},"Ticket"), getTick, (if tick then Label "✓", "success")
+      div {}, (div {className:'label'},"Email"),  getMail, (if mail then Label "✓", "success")
       if ship and tick
         rele RecycleTicket, {ship, tick, mail}
 
