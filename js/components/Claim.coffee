@@ -17,7 +17,7 @@ name = (displayName,component)-> _.extend component, {displayName}
 
 {div,b,h3,h6,p,span,code} = React.DOM
 
-SHOP = false # enable ship shop
+SHOP = true # enable ship shop
 
 unless SHOP
   Shop = (type,length)->

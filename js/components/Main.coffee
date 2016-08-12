@@ -3,7 +3,7 @@ Ships  = require './Ships.coffee'
 
 rele = React.createElement
 
-NET = false
+NET = true
 
 {div, h3, h4} = React.DOM
 
