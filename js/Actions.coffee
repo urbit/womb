@@ -7,7 +7,7 @@ module.exports =
   recycleTicket: ({ship,tick,mail},pass)->
     Persistence.put "womb-recycle",
       {who:mail,him:"~"+ship,tik:"~"+tick},
-      (err,{status})=>
+      (err,{status,data})=>
         if status isnt 200
           throw new Error "Server error: #{JSON.stringify data}" # XX handle
         @getData "/ticket/~#{ship}/~#{tick}", true

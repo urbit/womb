@@ -5,7 +5,7 @@ rele = React.createElement
 
 NET = false
 
-{div, h3} = React.DOM
+{div, h3, h4} = React.DOM
 
 module.exports = ->
   div {},
