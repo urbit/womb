@@ -2,7 +2,9 @@ Dispatcher    = require './Dispatcher.coffee'
 Persistence   = require './Persistence.coffee'
 
 module.exports =
-  setPasscode: (pass)-> Dispatcher.dispatch setPasscode: pass
+  setPasscode: (pass)->
+    Dispatcher.dispatch setPasscode: pass
+    $('.womb-pass-input').each -> @.value ||= pass # XX controlled component
 
   recycleTicket: ({ship,tick,mail},pass)->
     Persistence.put "womb-recycle",

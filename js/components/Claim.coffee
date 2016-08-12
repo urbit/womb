@@ -57,8 +57,8 @@ module.exports = name "Claim", FromStore "pass", ({pass})->
   div {},
       p {}, "To view your ships, input your passcode."
       PassInput {minLength:32,defaultValue:pass,onInputPass:Actions.setPasscode}
-      if pass then rele Balance, {pass}
+      if pass then rele Balance, {key:"balance", pass}
       else
-        p {},
+        div {key:"recycle"},
           h3 {}, "Convert an old ticket"
           rele Recycling, {}
