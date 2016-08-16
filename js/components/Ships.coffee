@@ -9,13 +9,13 @@ name = (displayName,component)-> _.extend component, {displayName}
 
 {p,ul,li,span,div,pre,code} = React.DOM
 
-labels = 
+labels =
   free: "Unallocated"
   owned: "Issued"
   split: "Distributing"
-    
-Stat = name "Stat", ({stats})-> 
-    ul {},
+
+Stat = name "Stat", ({stats})->
+    ul {className:'network'},
       for ship, {live,dist} of stats
         {free, owned, split} = dist # one of
         className = clas dist
@@ -30,5 +30,5 @@ Stat = name "Stat", ({stats})->
                 Label labels.split
               else rele Stat, stats:split
             else throw new Error "Bad stat: #{_.keys dist}"
-      
+
 module.exports = Scry "/stats", Stat

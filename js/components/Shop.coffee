@@ -19,9 +19,9 @@ Shop = (type,length)-> recl
   roll: -> shipSelector: Math.floor(Math.random()*10)
   reroll: -> @setState @roll()
   getInitialState: -> @roll()
-  
+
   onInputShip: (customShip)-> @setState {customShip}
-  
+
   render: ->
     div {},
       h6 {},
@@ -29,7 +29,7 @@ Shop = (type,length)-> recl
         button {onClick:@reroll}, "Reroll"
       rele ShopShips, _.extend {}, @props, {type,nth:@state.shipSelector}
       h6 {}, "Custom"
-      div {}, "Specific #{type}: ", 
+      div {}, "Specific #{type}: ",
         rele ShipInput, {length,@onInputShip}
         rele ClaimButton, {ship: (@state.customShip ? "")}
 
