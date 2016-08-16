@@ -20,14 +20,15 @@ RecycleButton = name "RecycleButton", ({disabled,onClick})->
 RecycleTicket = name "RecycleTicket",
   Scry "/ticket/~:ship/~:tick", ({ship,tick,mail,ticket:{passcode,status}})->
     doRecycle = -> Actions.recycleTicket {ship,tick,mail}, passcode
-    switch status ? "fail"
-      when "fail" then Label "Bad ticket", "warning"
-      when "good" then rele RecycleButton, {disabled:!mail,onClick:doRecycle}
-      when "used"
-        span {},
-          a {onClick: -> Actions.setPasscode passcode}, passcode
-          Label "Ticket exchanged", "info"
-      else throw new Error "Bad ticket status: #{status}"
+    div {className:'recycleTicket'},
+      switch status ? "fail"
+        when "fail" then Label "Bad ticket", "warning"
+        when "good" then rele RecycleButton, {disabled:!mail,onClick:doRecycle}
+        when "used"
+          span {},
+            a {onClick: -> Actions.setPasscode passcode}, passcode
+            Label "Ticket exchanged", "info"
+        else throw new Error "Bad ticket status: #{status}"
 
 Recycling = recl
   getInitialState: -> {ship:"",tick:"",mail:""}
