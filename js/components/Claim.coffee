@@ -50,6 +50,9 @@ Balance = Scry "/balance/:pass", ({balance})->
         "You currently hold "
         (b {}, planets or "no"), " Planets "
         "and ", (b {}, stars or "no"), " Stars."
+      p {className:'red'},
+        (b {}, "Warning: ")
+        "When you click 'Claim' we will send the relevant tickets to the email address above.  This can only be done once!"
       if stars then rele Stars
       if planets then rele Planets
 
