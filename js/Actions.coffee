@@ -12,7 +12,10 @@ module.exports =
           throw new Error "Server error: #{JSON.stringify data}" # XX handle
         @getData "/ticket/~#{ship}/~#{tick}", true
         @setPasscode pass
-      
+
+  confirmShip: (pass,ship)->
+    Dispatcher.dispatch confirmClaim: {pass, ship}
+
   claimShip: (pass,ship)->
     Dispatcher.dispatch putClaim: {pass, ship}
     Persistence.put "womb-claim",
@@ -24,7 +27,7 @@ module.exports =
         Dispatcher.dispatch {gotClaim}
         @getData "/stats", true
         @getData "/balance/#{pass}", true
-      
+
   getData: (path,fresh=no)->
     Persistence.get {path,fresh}, (err,{status,data})->
       if err?

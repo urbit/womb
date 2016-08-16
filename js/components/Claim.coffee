@@ -52,7 +52,7 @@ Balance = Scry "/balance/:pass", ({balance})->
         "and ", (b {}, stars or "no"), " Stars."
       p {className:'red'},
         (b {}, "Warning: ")
-        "When you click 'Claim' we will send the relevant tickets to the email address above.  This can only be done once!"
+        "When you click 'Claim' we will send the ticket to the email address above.  This can only be done once!"
       if stars then rele Stars
       if planets then rele Planets
 
@@ -63,6 +63,6 @@ module.exports = name "Claim", FromStore "pass", ({pass})->
       if pass
         rele Balance, {pass}
       else
-        div {style:{marginTop:"1rem"}},
+        div {},
           h3 {}, "Convert an old ticket"
           rele Recycling, {}

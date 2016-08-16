@@ -2,7 +2,7 @@ Scry = require './Scry.coffee'
 ShipInput = require './ShipInput.coffee'
 ClaimButton = require './ClaimButton.coffee'
 
-{ul,li,div,h6,button,span} = React.DOM
+{ul,li,div,h6,button,span,code} = React.DOM
 
 recl = React.createClass
 rele = React.createElement
@@ -24,13 +24,17 @@ Shop = (type,length)-> recl
 
   render: ->
     div {},
-      h6 {},
-        "Avaliable #{type} (random). ",
-        button {onClick:@reroll}, "Reroll"
+      h6 {}, "Avaliable #{type} — "
       rele ShopShips, _.extend {}, @props, {type,nth:@state.shipSelector}
-      h6 {}, "Custom"
-      div {}, "Specific #{type}: ",
-        rele ShipInput, {length,@onInputShip}
-        rele ClaimButton, {ship: (@state.customShip ? "")}
+      button {onClick:@reroll,className:'reroll'}, "Get a new set"
+      h6 {}, "Custom #{type} — "
+      div {},
+        div {style:{marginBottom:".3rem"}},
+          "If you understand how to pick a "
+          (code {}, "@p")
+          " for #{type}, feel free:",
+        div {style:{marginBottom:"1rem"}},
+          rele ShipInput, {length,@onInputShip}
+          rele ClaimButton, {ship: (@state.customShip ? "")}
 
 module.exports = Shop

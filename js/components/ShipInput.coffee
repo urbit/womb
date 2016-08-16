@@ -9,7 +9,7 @@ module.exports = name "ShipInput", ({onInputShip,length,defaultValue,oldFormat,p
   input {
     defaultValue,
     placeholder:placeholder
-    className: 'mono'
+    className: 'mono pick'
     onChange: ({target})->
       ship = target.value.trim()
       if ship[0] isnt '~'

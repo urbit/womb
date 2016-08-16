@@ -16,7 +16,7 @@ module.exports = ->
 
     if NET
       div {},
-        h4 {}, "Network"
+        h3 {}, "Network"
         rele Ships, {}
 
     div {className:'footer'},
