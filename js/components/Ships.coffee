@@ -15,8 +15,10 @@ labels =
   split: "Distributing"
 
 Stat = name "Stat", ({stats})->
+    ships = _(stats).keys().sort().sortBy("length").value()
     ul {className:'network'},
-      for ship, {live,dist} of stats
+      for ship in ships
+        {live,dist} = stats[ship]
         {free, owned, split} = dist # one of
         className = clas dist
         li {className,key:ship},
