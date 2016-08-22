@@ -24,7 +24,7 @@ Shop = (type,length)-> recl
 
   render: ->
     div {},
-      h6 {}, "Avaliable #{type} — "
+      h6 {}, "Available #{type} — "
       rele ShopShips, _.extend {}, @props, {type,nth:@state.shipSelector}
       button {onClick:@reroll,className:'reroll'}, "Get a new set"
       h6 {}, "Custom #{type} — "
